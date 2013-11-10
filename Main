@@ -1,0 +1,175 @@
+package gpm.common;
+ 
+import gpm.item.ItemWM;
+import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+ 
+@Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME , version= Reference.VERSION)
+@NetworkMod(clientSideRequired=true, serverSideRequired=false)
+public class Main {
+	//EnumToolMaterials
+		//public static EnumToolMaterial toolExample = net.minecraftforge.common.EnumHelper.addToolMateriall(NAME, Harvest Level, Durability, Efficiency, Damage, Enchantability);
+	public static EnumToolMaterial toolSaintium = net.minecraftforge.common.EnumHelper.addToolMaterial("SAINTIUM", 3, 1024, 15.0F, 5.0F, 30);
+	public static EnumToolMaterial toolWM = net.minecraftforge.common.EnumHelper.addToolMaterial("WM", 3, -1, 5.0F, 8.0F, 30);
+	public static EnumToolMaterial toolDM = net.minecraftforge.common.EnumHelper.addToolMaterial("DM", 3, -1, 9.0F, 12.0F, 30);
+	public static EnumToolMaterial toolRM = net.minecraftforge.common.EnumHelper.addToolMaterial("RM", 3, -1, 12.0F, 16.0F, 30);
+	//Creative Tab
+	public static CreativeTabs gpmTab = new CreativeTabs("EliteForges_gpmTab"){
+		public ItemStack getIconItemStack(){
+			return new ItemStack(RM);
+		}
+	};
+	//Item Registrations
+		//Tools
+					//WM
+	public final static Item wmPickaxe = new gpm.item.WMpick(1534, toolWM);
+	public final static Item wmAxe = new gpm.item.WMaxe(1535, toolWM);
+	public final static Item wmShovel = new gpm.item.WMshovel(1536, toolWM);
+	public final static Item wmSword = new gpm.item.WMsword(1537, toolWM);
+	public final static Item wmHoe = new gpm.item.WMhoe(1538, toolWM);
+					//DM
+	public final static Item dmPickaxe = new gpm.item.DMpick(1539, toolDM);
+	public final static Item dmAxe = new gpm.item.DMaxe(1540, toolDM);
+	public final static Item dmShovel = new gpm.item.DMshovel(1541, toolDM);
+	public final static Item dmSword = new gpm.item.DMsword(1542, toolDM);
+	public final static Item dmHoe = new gpm.item.DMhoe(1543, toolDM);
+					//RM
+	public final static Item rmPickaxe = new gpm.item.RMpick(1544, toolRM);
+	public final static Item rmAxe = new gpm.item.RMaxe(1545, toolRM);
+	public final static Item rmShovel = new gpm.item.RMshovel(1546, toolRM);
+	public final static Item rmSword = new gpm.item.RMsword(1547, toolRM);
+	public final static Item rmHoe = new gpm.item.RMhoe(1548, toolRM);
+					//Saintium
+	public final static Item saintiumPickaxe = new gpm.item.SaintiumPickaxe(1549, toolSaintium);
+	public final static Item saintiumAxe = new gpm.item.SaintiumAxe(1550, toolSaintium);
+	public final static Item saintiumShovel = new gpm.item.SaintiumShovel(1551, toolSaintium);
+	public final static Item saintiumSword = new gpm.item.SaintiumSword(1552, toolSaintium);
+	public final static Item SaintiumHoe = new gpm.item.SaintiumHoe(1553, toolSaintium);
+		//Materials
+    public final static Item saintium = new gpm.item.ItemSaintium(1240);
+    public final static Item WM = new gpm.item.ItemWM(1241);
+    public final static Item DM = new gpm.item.ItemDM(1242);
+    public final static Item RM = new gpm.item.ItemRM(1243);
+    public final static Item alloyGiron = new gpm.item.ItemGiron(1244);
+    public final static Item rubber = new gpm.item.ItemRubber(1245);
+    public final static Item poop = new gpm.item.ItemPoop(1246, 2, 0.4F, true);
+    public final static Item poopCake = new gpm.itemPoopCake(1247, 4, 1F, true);
+        // The instance of your mod that Forge uses.
+        @Instance("gpm")
+        public static Main instance;
+       
+        @EventHandler
+        public void preInit(FMLPreInitializationEvent event) {
+                // Stub Method
+        }
+        @EventHandler
+        public void load(FMLInitializationEvent event) {
+        	//Recipes
+        		//Furnace Recipes
+        	GameRegistry.addSmelting(alloyGiron.itemID, new ItemStack(saintium), 0.2F);
+        	GameRegistry.addSmelting(Item.sugar.itemID, new ItemStack(rubber), 0.2F);
+        		//Crafting
+        							//Useful Recipes
+        	GameRegistry.addRecipe(new ItemStack(Item.blazeRod, 2), new Object[] {
+        		"QQQ", "GGG", "QQQ", 'Q', Item.netherQuartz, 'G', Item.ingotGold
+        	});
+        	GameRegistry.addRecipe(new ItemStack(Item.feather, 2), new Object[] {
+        		" S ", " S ", " T ", 'S', Item.silk, 'T', Item.stick
+        	});
+        	GameRegistry.addRecipe(new ItemStack(Item.netherStar, 1), new Object[] {
+        		"QRQ", "RDR", "QRQ", 'Q', Item.netherQuartz, 'R', Item.blazeRod, 'D', Item.diamond
+        	});
+        	GameRegistry.addRecipe(new ItemStack(Item.gunpowder, 2), new Object[] {
+        		"RS ", 'R', Item.redstone, 'S', Item.sugar
+        	});
+        							//Materials
+        	GameRegistry.addRecipe(new ItemStack(alloyGiron, 3), new Object[] {
+        		"GGG", "III", "GGG", 'G', Item.ingotGold, 'I', Item.ingotIron
+        	});
+        	GameRegistry.addRecipe(new ItemStack(WM, 1), new Object[] {
+        		"CCC", "CDC", "CCC", 'C', Block.coalBlock, 'D', Item.diamond
+        	});
+        	GameRegistry.addRecipe(new ItemStack(DM, 1), new Object[] {
+        		"DDD", "DWD", "DDD", 'D', Item.diamond, 'W', WM
+        	});
+        	GameRegistry.addRecipe(new ItemStack(RM, 1), new Object[] {
+        		"WWW", "WDW", "WWW", 'W', WM, 'D', DM
+        	});
+        							//Tools
+        			//Saintium
+        	GameRegistry.addRecipe(new ItemStack(saintiumPickaxe, 1), new Object[] {
+        		"SSS", " I ", " I ", 'S', saintium, 'I', Item.ingotIron
+        	});
+        			//WM
+        	GameRegistry.addRecipe(new ItemStack(wmPickaxe, 1), new Object[] {
+        		"WWW", " D ", " D ", 'W', WM, 'D', Item.diamond
+        	});
+        	GameRegistry.addRecipe(new ItemStack(wmAxe, 1), new Object[] {
+        		"WW ", "WD ", " D ", 'W', WM, 'D', Item.diamond
+        	});
+        	GameRegistry.addRecipe(new ItemStack(wmShovel, 1), new Object[] {
+        		" W ", " D ", " D ", 'W', WM, 'D', Item.diamond
+        	});
+        	GameRegistry.addRecipe(new ItemStack(wmSword, 1), new Object[] {
+        		" W ", " W ", " D ", 'W', WM, 'D', Item.diamond
+        	});
+        	GameRegistry.addRecipe(new ItemStack(wmHoe, 1), new Object[] {
+        		"WW ", " D ", " D ", 'W', WM, 'D', Item.diamond
+        	});
+        			//DM
+        	GameRegistry.addRecipe(new ItemStack(dmPickaxe, 1), new Object[] {
+        		"DDD", " X ", " W ", 'D', DM, 'X', wmPickaxe, 'W', WM
+        	});
+        	GameRegistry.addRecipe(new ItemStack(dmAxe, 1), new Object[] {
+        		"DD ", "DX ", " W ", 'D', DM, 'W', WM, 'X', wmAxe
+        	});
+        	GameRegistry.addRecipe(new ItemStack(dmShovel, 1), new Object[] {
+        		" D ", " X ", " W ", 'D', DM, 'W', WM, 'X', wmShovel
+        	});
+        	GameRegistry.addRecipe(new ItemStack(dmSword, 1), new Object[] {
+        		" D ", " X ", " W ", 'D', DM, 'W', WM, 'X', wmSword
+        	});
+        	GameRegistry.addRecipe(new ItemStack(dmHoe, 1), new Object[] {
+        		"DD ", " X ", " W ", 'D', DM, 'W', WM, 'X', wmHoe
+        	});
+        			//RM
+        	GameRegistry.addRecipe(new ItemStack(rmPickaxe, 1), new Object[] {
+        		"RRR", " X ", " D ", 'R', RM, 'X', dmPickaxe, 'D', DM
+        	});
+        	GameRegistry.addRecipe(new ItemStack(rmAxe, 1), new Object[] {
+        		"RR ", "RX ", " D ", 'R', RM, 'X', dmAxe, 'D', DM
+        	});
+        	GameRegistry.addRecipe(new ItemStack(rmShovel, 1), new Object[] {
+        		" R ", " X ", " D ", 'R', RM, 'X', dmShovel, 'D', DM
+        	});
+        	GameRegistry.addRecipe(new ItemStack(rmSword, 1), new Object[] {
+        		" R ", " X ", " D ", 'R', RM, 'X', dmSword, 'D', DM
+        	});
+        	GameRegistry.addRecipe(new ItemStack(rmHoe, 1), new Object[] {
+        		"RR ", " X ", " D ", 'R', RM, 'X', dmHoe, 'D', DM
+        	});
+        	//Language Registry
+        	LanguageRegistry.instance().addStringLocalization("itemGroup.EliteForges_gpmTab", "Gnomey Pack");
+        }
+       
+        @EventHandler
+        public void postInit(FMLPostInitializationEvent event) {
+                // Stub Method
+        }
+       
+}
